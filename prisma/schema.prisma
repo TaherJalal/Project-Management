@@ -31,6 +31,8 @@ model Space{
   createdBy User @relation(fields: [createdByUser], references: [id])
   createdByUser String
 
+  name String
+
   users String[]
 
   task Task[]

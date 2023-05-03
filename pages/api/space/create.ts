@@ -17,10 +17,13 @@ export default async function addSpace(req: NextApiRequest , res: NextApiRespons
 
     const userId: string = jwt.verify(token , secret) as string
 
+    const {spaceName} = req.body
+
     await prisma.space.create({
         data:{
             createdByUser : userId,
-            users : userId
+            users : userId,
+            name : spaceName
         }
     })
 

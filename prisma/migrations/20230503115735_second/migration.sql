@@ -1,0 +1,12 @@
+/*
+  Warnings:
+
+  - Added the required column `name` to the `Space` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `spaceId` to the `invitesToSpace` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "Space" ADD COLUMN     "name" TEXT NOT NULL;
+
+-- AlterTable
+ALTER TABLE "invitesToSpace" ADD COLUMN     "spaceId" TEXT NOT NULL;
