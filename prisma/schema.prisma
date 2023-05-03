@@ -34,6 +34,9 @@ model Space{
   users String[]
 
   task Task[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 model Task{
