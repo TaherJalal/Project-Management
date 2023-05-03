@@ -2,8 +2,7 @@ import { NextApiRequest , NextApiResponse } from "next";
 import {prisma} from '../../../lib/prisma'
 import jwt from 'jsonwebtoken'
 
-export default async function addSpace(req: NextApiRequest , res: NextApiResponse) {
-
+export default async function invite(req: NextApiRequest ,res: NextApiResponse){
     if(req.method !== "POST"){
         res.status(405).send("Method Not Allowed, Not A POST Request")
     }
@@ -11,19 +10,23 @@ export default async function addSpace(req: NextApiRequest , res: NextApiRespons
     const token: string = req.headers["authorization"] as string
     const secret: string = process.env.SECRET as string
 
-    if(!req.headers["authorization"]){
+    if(!token){
         res.status(401).send("UnAuthorized")
     }
 
     const userId: string = jwt.verify(token , secret) as string
 
-    await prisma.space.create({
+    const {userToBeInvited} = req.body
+
+    if(!userToBeInvited){
+        res.status(400).send("No User To Be Invited")
+    }
+
+    await prisma.invitesToSpace.create({
         data:{
-            createdByUser : userId,
-            users : userId
+            createdByUser: userId,
+            userInvited: userToBeInvited
         }
     })
-
-    res.json("Space Added")
 
 }
