@@ -14,18 +14,18 @@ export default async function invite(req: NextApiRequest ,res: NextApiResponse){
         res.status(401).send("UnAuthorized")
     }
 
-    const userId: string = jwt.verify(token , secret) as string
-
-    const {userToBeInvited} = req.body
+    const {spaceId , userToBeInvited} = req.body
 
     if(!userToBeInvited){
         res.status(400).send("No User To Be Invited")
     }
 
-    await prisma.invitesToSpace.create({
+    await prisma.invitesToSpace.update({
+        where: {
+            id : spaceId
+        },
         data:{
-            createdByUser: userId,
-            userInvited: userToBeInvited
+            userInvited : userToBeInvited
         }
     })
 

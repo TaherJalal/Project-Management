@@ -67,8 +67,9 @@ model invitesToSpace{
   createdBy User @relation(fields: [createdByUser], references: [id])
   createdByUser String
 
-  userInvited String
+  spaceId String
 
+  userInvited String
 }
 
 enum Status {
