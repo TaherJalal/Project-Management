@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../lib/prisma";
 import jwt from "jsonwebtoken";
 
-export default async function deleteSpace(
+export default async function addSpace(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -15,17 +15,15 @@ export default async function deleteSpace(
 
   const userId: string = jwt.verify(token, secret) as string;
 
-  if (!userId || !req.headers["authorization"]) {
+  if (!userId) {
     res.status(401).send("UnAuthorized");
   }
 
-  const { spaceId } = req.body;
+  const { accept } = req.body;
 
-  await prisma.space.delete({
+  const invites = await prisma.invitesToSpace.findMany({
     where: {
-      id: spaceId,
+      userInvited: userId,
     },
   });
-
-  res.status(201).send("Space Deleted");
 }
