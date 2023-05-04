@@ -6,8 +6,8 @@ export default async function deleteTask(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "DELETE") {
-    res.status(405).send("Method Not Allowed, Not A DELETE Request");
+  if (req.method !== "POST") {
+    res.status(405).send("Method Not Allowed, Not A POST Request");
   }
 
   const token: string = req.headers["authorization"] as string;
@@ -31,5 +31,5 @@ export default async function deleteTask(
     },
   });
 
-  res.status(202).send("Task Deleted");
+  res.status(201).send("Task Deleted");
 }

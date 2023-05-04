@@ -19,15 +19,11 @@ export default async function createTask(
     res.status(401).send("UnAuthorized");
   }
 
-  const { spaceId, user, title, description, status, priority } = req.body;
+  const { spaceId, title, description, status, priority } = req.body;
   const errors = [];
 
   if (!spaceId) {
     errors.push("Missing Space Id");
-  }
-
-  if (!user) {
-    errors.push("Missing User Id");
   }
 
   if (!title) {
@@ -45,7 +41,7 @@ export default async function createTask(
   await prisma.task.create({
     data: {
       spaceId,
-      createdByUser: user,
+      createdByUser: userId,
       title,
       description,
       status,
