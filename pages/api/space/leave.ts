@@ -21,11 +21,21 @@ export default async function leaveSpace(req: NextApiRequest , res: NextApiRespo
 
     const space = await prisma.space.findFirst({
         where:{
-            id: spaceId,
-            users : {
-                has : userId
-            }
+            id: spaceId
         }
     })
+
+    const leaveSpace = space?.users.filter(user => !space.users.includes(user))
+
+    await prisma.space.update({
+        where:{
+            id : spaceId
+        },
+        data:{
+            users : leaveSpace
+        }
+    })
+
+    res.send("Left Space Succesfully")
 
 }
