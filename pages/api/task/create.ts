@@ -1,57 +1,57 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {prisma} from '../../../lib/prisma'
-import jwt from "jsonwebtoken"
+import { prisma } from "../../../lib/prisma";
+import jwt from "jsonwebtoken";
 
+export default async function createTask(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== "POST") {
+    res.status(405).send("Method Not Allowed, Not A POST Request");
+  }
 
-export default async function createTask(req: NextApiRequest ,res: NextApiResponse){
+  const token: string = req.headers["authorization"] as string;
+  const secret: string = process.env.SECRET as string;
 
-    if(req.method !== "POST"){
-        res.status(405).send("Method Not Allowed, Not A POST Request")
-    }
+  const userId: string = jwt.verify(token, secret) as string;
 
-    const token: string = req.headers["authorization"] as string
-    const secret: string = process.env.SECRET as string
+  if (!userId) {
+    res.status(401).send("UnAuthorized");
+  }
 
-    const userId: string = jwt.verify(token , secret) as string
+  const { spaceId, user, title, description, status, priority } = req.body;
+  const errors = [];
 
-    if(!userId){
-        res.status(401).send("UnAuthorized")
-    }
+  if (!spaceId) {
+    errors.push("Missing Space Id");
+  }
 
-    const { spaceId , user , title , description , status , priority } = req.body
-    const errors = []
+  if (!user) {
+    errors.push("Missing User Id");
+  }
 
-    if(!spaceId){
-        errors.push("Missing Space Id")
-    }
+  if (!title) {
+    errors.push("Missing Title");
+  }
 
-    if(!user){
-        errors.push("Missing User Id")
-    }
+  if (!description) {
+    errors.push("Missing Description");
+  }
 
-    if(!title){
-        errors.push("Missing Title")
-    }
+  if (errors.length > 0) {
+    res.status(400).send(errors);
+  }
 
-    if(!description){
-        errors.push("Missing Description")
-    }
+  await prisma.task.create({
+    data: {
+      spaceId,
+      createdByUser: user,
+      title,
+      description,
+      status,
+      priority,
+    },
+  });
 
-    if(errors.length > 0){
-        res.status(400).send(errors)
-    }
-
-    await prisma.task.create({
-        data:{
-            spaceId,
-            createdByUser: user,
-            title,
-            description,
-            status,
-            priority
-        }
-    })
-
-    res.status(200).send("Task Created")
-
+  res.status(201).send("Task Created");
 }
