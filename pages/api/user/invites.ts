@@ -19,11 +19,55 @@ export default async function addSpace(
     res.status(401).send("UnAuthorized");
   }
 
-  const { accept } = req.body;
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  //   const { accept } = req.body;
 
   const invites = await prisma.invitesToSpace.findMany({
     where: {
-      userInvited: userId,
+      userInvited: user?.email,
     },
+  });
+
+  const inviters = await Promise.all(
+    invites.map(
+      async invite =>
+        await prisma.user.findUnique({
+          where: {
+            id: invite.userInvited,
+          },
+        })
+    )
+  );
+
+  const space = await Promise.all(
+    invites.map(
+      async invite =>
+        await prisma.space.findUnique({
+          where: {
+            id: invite.spaceId,
+          },
+        })
+    )
+  );
+
+  //   const x = invites.map(
+  //     async invite =>
+  //       await Promise.all(
+  //         await prisma.user.findUnique({
+  //           where: {
+  //             id: invite.userInvited,
+  //           },
+  //         })
+  //       )
+  //   );
+
+  res.json({
+    inviters,
+    space,
   });
 }
