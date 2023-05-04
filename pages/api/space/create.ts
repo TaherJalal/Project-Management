@@ -11,11 +11,11 @@ export default async function addSpace(req: NextApiRequest , res: NextApiRespons
     const token: string = req.headers["authorization"] as string
     const secret: string = process.env.SECRET as string
 
-    if(!token){
+    const userId: string = jwt.verify(token , secret) as string
+
+    if(!userId){
         res.status(401).send("UnAuthorized")
     }
-
-    const userId: string = jwt.verify(token , secret) as string
 
     const {spaceName} = req.body
 

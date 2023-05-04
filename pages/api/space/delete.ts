@@ -4,12 +4,15 @@ import jwt from 'jsonwebtoken'
 
 export default async function deleteSpace(req: NextApiRequest , res: NextApiResponse){
     if(req.method !== "DELETE"){
-        res.status(405).send("Method Not Allowed, Not A POST Request")
+        res.status(405).send("Method Not Allowed, Not A DELETE Request")
     }
 
     const token: string = req.headers["authorization"] as string
+    const secret: string = process.env.SECRET as string
 
-    if(!token){
+    const userId: string = jwt.verify(token , secret) as string
+
+    if(!userId){
         res.status(401).send("UnAuthorized")
     }
 
