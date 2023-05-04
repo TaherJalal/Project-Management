@@ -54,7 +54,7 @@ model Task{
 
   description String
 
-  status Boolean
+  status Boolean @default(false)
 
   priority Status @default(LOW)
 
