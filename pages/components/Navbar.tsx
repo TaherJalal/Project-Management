@@ -3,7 +3,7 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div className='font-montserrat font-medium text-lg flex justify-between px-3 py-1'>
+    <div className='font-montserrat font-medium text-lg flex justify-between px-5 py-1'>
 
     <div className='flex gap-5 font-montserrat'>
   <Link href="/">Home</Link>
