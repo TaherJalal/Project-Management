@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../lib/prisma";
 import jwt from "jsonwebtoken";
+import index from "@/pages";
 
 export default async function addSpace(
   req: NextApiRequest,
@@ -15,48 +16,38 @@ export default async function addSpace(
 
   const userId: string = jwt.verify(token, secret) as string;
 
+  const { accept } = req.body;
+
   if (!userId) {
     res.status(401).send("UnAuthorized");
   }
 
-  const user = await prisma.user.findUnique({
+  const userr = await prisma.user.findUnique({
     where: {
       id: userId,
     },
   });
 
-  //   const { accept } = req.body;
-
   const invites = await prisma.invitesToSpace.findMany({
     where: {
-      userInvited: user?.email,
+      userInvited: userr?.email,
     },
   });
 
-  const inviters = await Promise.all(
+  const user = await Promise.all(
     invites.map(
-      async invite =>
+      async user =>
         await prisma.user.findUnique({
           where: {
-            email: invite.userInvited,
+            id: user.createdByUser,
           },
         })
     )
   );
 
-  const space = await Promise.all(
-    invites.map(
-      async invite =>
-        await prisma.space.findUnique({
-          where: {
-            id: invite.spaceId,
-          },
-        })
-    )
-  );
+  invites.forEach((x, index) => (x.createdByUser = user[index]?.email!));
 
   res.json({
-    inviters,
-    space,
+    invites,
   });
 }
