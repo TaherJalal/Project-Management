@@ -38,7 +38,7 @@ export default async function addSpace(
       async invite =>
         await prisma.user.findUnique({
           where: {
-            id: invite.userInvited,
+            email: invite.userInvited,
           },
         })
     )
@@ -54,17 +54,6 @@ export default async function addSpace(
         })
     )
   );
-
-  //   const x = invites.map(
-  //     async invite =>
-  //       await Promise.all(
-  //         await prisma.user.findUnique({
-  //           where: {
-  //             id: invite.userInvited,
-  //           },
-  //         })
-  //       )
-  //   );
 
   res.json({
     inviters,
