@@ -1,8 +1,12 @@
+import Link from 'next/link'
 import React from 'react'
+import Navbar from './components/Navbar'
 
 function index() {
   return (
-    <div>index</div>
+    <>
+    <Navbar />
+    </>
   )
 }
 
