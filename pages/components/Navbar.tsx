@@ -13,7 +13,7 @@ function Navbar() {
 
   <div className='flex gap-5 font-montserrat'>
   <Link href="/about">About Us</Link>
-  <Link href="/login">Register/Login</Link>
+  <Link href="auth/signin">Register/Login</Link>
   </div>
 
   </div>
