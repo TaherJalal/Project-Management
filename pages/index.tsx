@@ -32,7 +32,8 @@ function index() {
           <AiOutlineHome />
             </div>
 
-            <div className='flex gap-2 justify-center items-center' onClick={state ? () => setState(false) : () => setState(true)}>
+          <div className='flex flex-col gap-2 justify-center items-center'>
+               <div className='flex gap-2 justify-center items-center' onClick={state ? () => setState(false) : () => setState(true)}>
           <p>Spaces</p>
           {
             state ? 
@@ -44,8 +45,10 @@ function index() {
           <AiOutlineArrowUp />
             ) 
           }
+            </div> 
             <AiOutlinePlus />
-            </div>
+          </div>
+        
           </div>
 
         </div>
