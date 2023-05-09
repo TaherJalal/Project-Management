@@ -7,33 +7,31 @@ export default async function signin(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const secret = process.env.SECRET;
 
-    const secret = process.env.SECRET
+  if (req.method !== "POST") {
+    res.status(405).send("Method Not Allowed, Not A POST Request");
+  }
 
-    if(req.method !== "POST"){
-        res.status(405).send("Method Not Allowed, Not A POST Request")
-    }
+  const { email, password } = req.body;
 
-    const {email , password} = req.body
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
-    const user = await prisma.user.findUnique({
-        where:{
-            email
-        }
-    })
+  if (!user) {
+    res.status(400).send("Email Not Found");
+  }
 
-    if(!user){
-        res.status(400).send("Email Not Found")
-    }
+  const checkPass: boolean = bcrypt.compareSync(password, user?.password!);
 
-   const checkPass: boolean = bcrypt.compareSync(password , user?.password!)
+  if (!checkPass) {
+    res.status(401).send("Wrong Password");
+  }
 
-   if(!checkPass){
-    res.status(401).send("Wrong Password")
-   }
+  const token: string = jwt.sign(user?.id!, secret!);
 
-   const token: string = jwt.sign(user?.id! , secret!)
-
-   res.status(200).json(token)
-
+  res.status(200).json({ token: token });
 }
