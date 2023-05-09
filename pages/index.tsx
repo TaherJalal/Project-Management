@@ -8,6 +8,8 @@ function index() {
 
   const [token ,setToken] = useState<string>("")
   const [state , setState] = useState<boolean>(false)
+  const [spaces ,setSpaces] = useState([])
+  const [newSpaceState , setNewSpaceState] = useState(false)
 
   useEffect(() => {
       console.log(localStorage.getItem("token"))
@@ -32,6 +34,7 @@ function index() {
           <AiOutlineHome />
             </div>
 
+
           <div className='flex flex-col gap-2 justify-center items-center'>
                <div className='flex gap-2 justify-center items-center' onClick={state ? () => setState(false) : () => setState(true)}>
           <p>Spaces</p>
@@ -46,7 +49,35 @@ function index() {
             ) 
           }
             </div> 
+
+
+            <div className='flex gap-2 justify-center items-center' onClick={newSpaceState ? () => setNewSpaceState(false) : () => setNewSpaceState(true)}>
+
             <AiOutlinePlus />
+            {
+            newSpaceState 
+            ?
+
+            (
+            <form className='text-black'>
+            <input type="text" placeholder='Space Name' className='text-sm rounded-sm text-center' />
+            </form>
+            )
+
+            :
+
+            (
+            <></>   
+            )
+
+            }
+            
+            </div>
+          </div>
+
+
+          <div> 
+
           </div>
         
           </div>
