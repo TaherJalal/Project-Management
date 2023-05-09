@@ -26,7 +26,7 @@ const register = async (e:any) => {
 
   setToken(data.token)
   localStorage.setItem("token" , data.token)
-  window.location.reload()
+  window.location.href == "/"
 
 }
 

@@ -13,7 +13,6 @@ function signin() {
   },[token])
 
   const login = async (event:any) => {
-    event.preventDefault()
   const {data} = await axios.post("http://localhost:3000/api/auth/signin", {
       email,
       password
@@ -21,7 +20,8 @@ function signin() {
 
     setToken(data.token)
     localStorage.setItem("token" , data.token)
-    window.location.reload()
+    window.location.href == "http://localhost:3000/"
+
   }
 
   return (
