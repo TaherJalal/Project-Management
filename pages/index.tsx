@@ -3,11 +3,13 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Link from 'next/link'
 import {AiOutlineArrowDown} from "react-icons/ai"
+import {AiOutlineArrowUp} from "react-icons/ai"
 import {AiOutlineHome} from "react-icons/ai"
 
 function index() {
 
-  let [token ,setToken] = useState("")
+  const [token ,setToken] = useState<string>("")
+  const [state , setState] = useState<boolean>(false)
 
   useEffect(() => {
       console.log(localStorage.getItem("token"))
@@ -33,8 +35,17 @@ function index() {
             </div>
 
             <div className='flex gap-2 justify-center items-center'>
-          <Link href="/spaces">Spaces</Link>
-          <AiOutlineArrowDown />
+          <p>Spaces</p>
+          {
+            state ? 
+            (
+          <AiOutlineArrowDown onClick={() => setState(false)} />
+            ) 
+            : 
+            (
+          <AiOutlineArrowUp onClick={() => setState(true)} />
+            ) 
+          }
             </div>
           </div>
 
