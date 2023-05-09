@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Link from 'next/link'
-import {AiOutlineArrowDown} from "react-icons/ai"
-import {AiOutlineArrowUp} from "react-icons/ai"
-import {AiOutlineHome} from "react-icons/ai"
+import {AiOutlineHome, AiOutlineArrowDown , AiOutlineArrowUp , AiOutlinePlus} from "react-icons/ai"
 
 function index() {
 
@@ -34,18 +32,19 @@ function index() {
           <AiOutlineHome />
             </div>
 
-            <div className='flex gap-2 justify-center items-center'>
+            <div className='flex gap-2 justify-center items-center' onClick={state ? () => setState(false) : () => setState(true)}>
           <p>Spaces</p>
           {
             state ? 
             (
-          <AiOutlineArrowDown onClick={() => setState(false)} />
+          <AiOutlineArrowDown  />
             ) 
             : 
             (
-          <AiOutlineArrowUp onClick={() => setState(true)} />
+          <AiOutlineArrowUp />
             ) 
           }
+            <AiOutlinePlus />
             </div>
           </div>
 
