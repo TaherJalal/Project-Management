@@ -16,7 +16,7 @@ function signup() {
   
 
 const register = async (e:any) => {
-  e.oreventDefault()
+  e.preventDefault()
   const { data } = await axios.post("http://localhost:3000/api/auth/signup" , {
   firstName,
   lastName,
@@ -24,7 +24,9 @@ const register = async (e:any) => {
   password
   })
 
- console.log(data)
+  setToken(data.token)
+  localStorage.setItem("token" , data.token)
+  window.location.reload()
 
 }
 
