@@ -27,5 +27,40 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-  res.json(spaces);
+  const { firstName, lastName, invitesToSpace, space } =
+    await prisma.user.findUniqueOrThrow({
+      where: {
+        id: userId,
+      },
+      include: {
+        invitesToSpace: true,
+        space: true,
+      },
+    });
+
+  const user = await Promise.all(
+    invitesToSpace.map(
+      async user =>
+        await prisma.user.findUnique({
+          where: {
+            id: user.createdByUser,
+          },
+        })
+    )
+  );
+
+  invitesToSpace.forEach((x, index) => (x.createdByUser = user[index]?.email!));
+
+  res.json({
+    firstName,
+    lastName,
+    invitesToSpace,
+    space,
+  });
+
+  // res.json({
+  //   name: firstName + " " + lastName,
+  //   invitesToSpace : ,
+  //   spaces:
+  // });
 }

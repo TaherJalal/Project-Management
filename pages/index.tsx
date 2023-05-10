@@ -5,26 +5,45 @@ import Link from 'next/link'
 import {RxHamburgerMenu} from 'react-icons/rx'
 import {AiOutlineHome, AiOutlineArrowDown , AiOutlineArrowUp , AiOutlineArrowLeft , AiOutlinePlus} from "react-icons/ai"
 import {HiOutlineArrowLeft} from 'react-icons/hi'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+
 function index() {
 
-  const [token ,setToken] = useState<string>("")
   const [state , setState] = useState<boolean>(false)
   const [showSideBar , setShowSideBar] = useState<boolean>(false)
   const [spaces ,setSpaces] = useState([])
   const [newSpaceState , setNewSpaceState] = useState(false)
 
-  useEffect(() => {
-      console.log(localStorage.getItem("token"))
-      setToken(localStorage.getItem("token")!)
-      console.log(token)
-  },[])
+  const { isLoading , error } = useQuery({
+    queryKey: ["landingPageData"],
+    queryFn: async () => await axios.get("http://localhost:3000/api/" , {
+      headers: { Authorization: localStorage.getItem("token")}
+    }),
+    onSuccess: (data) => {
+        setSpaces(data.data)
+    }
+  })
+
+  console.log(spaces)
+  
+  if (isLoading) return ( 
+    <div className='dark:bg-zinc-950 dark:text-white bg-white text-black h-screen'>
+    Loading...
+    </div> )
+  
+    if (error) return ( 
+    <div className='dark:bg-zinc-950 dark:text-white bg-white text-black h-screen'>
+      {'An error has occurred: ' + error.message}
+    </div> 
+    )
 
 
   return (
   <>
 
   {
-   token ? 
+   localStorage.getItem("token") ? 
    (
     <div className='bg-indigo-300 flex overflow-hidden'>
       {
@@ -101,7 +120,7 @@ function index() {
 
 <div className='flex flex-col gap-4 h-screen p-3'>
 
-<div className='flex gap-4 justify-first text-2xl w-10/12'>
+<div className='flex gap-4 justify-first text-2xl relative left-full'>
  <p>search</p>
 <p>sort</p>
 <p>filters</p> 
