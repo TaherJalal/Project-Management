@@ -25,9 +25,16 @@ export default async function invite(
     res.status(400).send("No User To Be Invited");
   }
 
+  const space = await prisma.space.findUnique({
+    where: {
+      id: spaceId,
+    },
+  });
+
   await prisma.invitesToSpace.create({
     data: {
       createdByUser: userId,
+      spaceName: space?.name!,
       userInvited: userToBeInvited,
       spaceId: spaceId,
     },
