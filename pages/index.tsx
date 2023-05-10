@@ -11,7 +11,9 @@ import {
 } from "react-icons/ai";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import { BsCheck2, BsXLg } from "react-icons/bs";
+import { FcInvite } from "react-icons/fc";
 import { useQuery } from "@tanstack/react-query";
+import { RxCardStackMinus } from "react-icons/rx";
 import axios from "axios";
 
 export default function index() {
@@ -57,19 +59,19 @@ export default function index() {
   return (
     <>
       {localStorage.getItem("token") ? (
-        <div className="bg-indigo-300 flex overflow-hidden">
+        <div className="bg-indigo-200 flex overflow-hidden">
           {!showSideBar ? (
             <div
-              className="w-20 h-screen flex justify-center py-3 bg-rose-300"
+              className="w-10 h-screen flex justify-center py-3 bg-rose-300"
               onClick={() => setShowSideBar(true)}
             >
               <div className="flex justify-end">
-                <RxHamburgerMenu size={30} />
+                <RxHamburgerMenu size={20} />
               </div>
             </div>
           ) : (
-            <div className="h-screen w-72 bg-rose-300 flex flex-col font-montserrat">
-              <div className="p-3 pl-6 flex flex-col gap-4 text-lg font-semibold">
+            <div className="h-screen w-auto bg-rose-300 flex flex-col font-montserrat">
+              <div className="p-2 flex flex-col gap-4 text-lg font-semibold">
                 <div className="flex justify-end">
                   <HiOutlineArrowLeft
                     size={20}
@@ -94,6 +96,7 @@ export default function index() {
                     }
                   >
                     <p>Spaces</p>
+                    <RxCardStackMinus />
                     {state ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
                   </div>
                   {state ? (
@@ -139,6 +142,7 @@ export default function index() {
                     }
                   >
                     <p>Invites</p>
+                    <FcInvite />
                     {state2 ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
                   </div>
                   {state2 ? (
