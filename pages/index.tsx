@@ -129,6 +129,33 @@ export default function index() {
                     )}
                   </div>
                 </div>
+
+                <div className="flex flex-col gap-2 justify-center items-center">
+                  <div
+                    className="flex gap-2 justify-center items-center"
+                    onClick={
+                      state ? () => setState(false) : () => setState(true)
+                    }
+                  >
+                    <p>Invites</p>
+                    {state ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
+                  </div>
+                  {state ? (
+                    <div>
+                      {invites.map((invite) => (
+                        <div className="text-sm flex" key={invite.id}>
+                          <p className="hidden">{invite.id}</p>
+                          <p>{invite.spaceName} </p>
+                          <p className="text-semibold">
+                            From {invite.createdByUser}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
           )}
