@@ -7,15 +7,16 @@ import {
   AiOutlineHome,
   AiOutlineArrowDown,
   AiOutlineArrowUp,
-  AiOutlineArrowLeft,
   AiOutlinePlus,
 } from "react-icons/ai";
 import { HiOutlineArrowLeft } from "react-icons/hi";
+import { BsCheck2, BsXLg } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export default function index() {
   const [state, setState] = useState<boolean>(false);
+  const [state2, setState2] = useState<boolean>(false);
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
   const [data, setData] = useState([]);
   const [newSpaceState, setNewSpaceState] = useState(false);
@@ -63,15 +64,15 @@ export default function index() {
               onClick={() => setShowSideBar(true)}
             >
               <div className="flex justify-end">
-                <RxHamburgerMenu size={40} />
+                <RxHamburgerMenu size={30} />
               </div>
             </div>
           ) : (
             <div className="h-screen w-72 bg-rose-300 flex flex-col font-montserrat">
-              <div className="p-3 pl-6 flex flex-col gap-4 text-2xl font-semibold">
+              <div className="p-3 pl-6 flex flex-col gap-4 text-lg font-semibold">
                 <div className="flex justify-end">
                   <HiOutlineArrowLeft
-                    size={40}
+                    size={20}
                     onClick={() => setShowSideBar(false)}
                   />
                 </div>
@@ -98,7 +99,7 @@ export default function index() {
                   {state ? (
                     <div>
                       {spaces.map((space) => (
-                        <div className="text-sm flex" key={space.id}>
+                        <div className="text-xs flex" key={space.id}>
                           <p className="hidden">{space.id}</p>
                           <p>{space.name}</p>
                         </div>
@@ -134,21 +135,26 @@ export default function index() {
                   <div
                     className="flex gap-2 justify-center items-center"
                     onClick={
-                      state ? () => setState(false) : () => setState(true)
+                      state2 ? () => setState2(false) : () => setState2(true)
                     }
                   >
                     <p>Invites</p>
-                    {state ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
+                    {state2 ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
                   </div>
-                  {state ? (
+                  {state2 ? (
                     <div>
                       {invites.map((invite) => (
-                        <div className="text-sm flex" key={invite.id}>
+                        <div className="text-xs flex gap-3" key={invite.id}>
                           <p className="hidden">{invite.id}</p>
-                          <p>{invite.spaceName} </p>
+                          <p>{invite.spaceName}</p>
+                          <p>|</p>
                           <p className="text-semibold">
-                            From {invite.createdByUser}
+                            {invite.createdByUser}
                           </p>
+                          <div className="flex gap-2">
+                            <BsCheck2 />
+                            <BsXLg />
+                          </div>
                         </div>
                       ))}
                     </div>
