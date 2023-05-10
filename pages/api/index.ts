@@ -49,11 +49,23 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     )
   );
 
+  const spaceNames = await Promise.all(
+    invitesToSpace.map(
+      async space =>
+        await prisma.space.findUnique({
+          where: {
+            id: space.spaceId,
+          },
+        })
+    )
+  );
+
   invitesToSpace.forEach((x, index) => (x.createdByUser = user[index]?.email!));
 
   res.json({
     name: firstName + " " + lastName,
     invites: invitesToSpace,
+    spaceNamesInvite: spaceNames,
     spaces: space,
   });
 }
