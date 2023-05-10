@@ -27,5 +27,11 @@ export default async function deleteSpace(
     },
   });
 
+  await prisma.invitesToSpace.deleteMany({
+    where: {
+      spaceId,
+    },
+  });
+
   res.status(201).send("Space Deleted");
 }

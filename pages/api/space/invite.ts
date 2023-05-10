@@ -42,7 +42,7 @@ export default async function invite(
   }
 
   if (inSpace || invited) {
-    res.status(500).send("User Already In Space");
+    res.status(500).send("User Already In Space Or Invited");
   } else {
     const space = await prisma.space.findUnique({
       where: {
