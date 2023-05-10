@@ -14,11 +14,14 @@ import { HiOutlineArrowLeft } from "react-icons/hi";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-function index() {
+export default function index() {
   const [state, setState] = useState<boolean>(false);
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
-  const [spaces, setSpaces] = useState([]);
+  const [data, setData] = useState([]);
   const [newSpaceState, setNewSpaceState] = useState(false);
+  const [name, setName] = useState<string>("");
+  const [spaces, setSpaces] = useState([]);
+  const [invites, setInvites] = useState([]);
 
   const { isLoading, error } = useQuery({
     queryKey: ["landingPageData"],
@@ -27,11 +30,14 @@ function index() {
         headers: { Authorization: localStorage.getItem("token") },
       }),
     onSuccess: (data) => {
-      setSpaces(data.data);
+      setData(data.data),
+        setName(data.data.name),
+        setSpaces(data.data.spaces),
+        setInvites(data.data.invites);
     },
   });
 
-  console.log(spaces);
+  console.log(data);
 
   if (isLoading)
     return (
@@ -71,6 +77,10 @@ function index() {
                 </div>
 
                 <div className="flex gap-2 justify-center items-center">
+                  <h2 className="">Hi, {name} !</h2>
+                </div>
+
+                <div className="flex gap-2 justify-center items-center">
                   <Link href="/">Home</Link>
                   <AiOutlineHome />
                 </div>
@@ -85,7 +95,18 @@ function index() {
                     <p>Spaces</p>
                     {state ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />}
                   </div>
-
+                  {state ? (
+                    <div>
+                      {spaces.map((space) => (
+                        <div className="text-sm flex" key={space.id}>
+                          <p className="hidden">{space.id}</p>
+                          <p>{space.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                   <div
                     className="flex gap-2 justify-center items-center"
                     onClick={
@@ -137,5 +158,3 @@ function index() {
     </>
   );
 }
-
-export default index;

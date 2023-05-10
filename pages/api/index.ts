@@ -16,17 +16,6 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     res.status(401).send("UnAuthorized");
   }
 
-  const spaces = await prisma.space.findMany({
-    where: {
-      users: {
-        has: userId,
-      },
-    },
-    include: {
-      task: true,
-    },
-  });
-
   const { firstName, lastName, invitesToSpace, space } =
     await prisma.user.findUniqueOrThrow({
       where: {
@@ -34,13 +23,20 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
       },
       include: {
         invitesToSpace: true,
-        space: true,
+        space: {
+          select: {
+            id: true,
+            createdByUser: true,
+            name: true,
+            task: true,
+          },
+        },
       },
     });
 
   const user = await Promise.all(
     invitesToSpace.map(
-      async user =>
+      async (user) =>
         await prisma.user.findUnique({
           where: {
             id: user.createdByUser,
