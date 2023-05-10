@@ -52,15 +52,8 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
   invitesToSpace.forEach((x, index) => (x.createdByUser = user[index]?.email!));
 
   res.json({
-    firstName,
-    lastName,
-    invitesToSpace,
-    space,
+    name: firstName + " " + lastName,
+    invites: invitesToSpace,
+    spaces: space,
   });
-
-  // res.json({
-  //   name: firstName + " " + lastName,
-  //   invitesToSpace : ,
-  //   spaces:
-  // });
 }
