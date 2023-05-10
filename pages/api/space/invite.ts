@@ -21,24 +21,44 @@ export default async function invite(
 
   const { spaceId, userToBeInvited } = req.body;
 
+  const inSpace = await prisma.space.findFirst({
+    where: {
+      id: spaceId,
+      users: {
+        has: userToBeInvited,
+      },
+    },
+  });
+
+  const invited = await prisma.invitesToSpace.findFirst({
+    where: {
+      spaceId,
+      userInvited: userToBeInvited,
+    },
+  });
+
   if (!userToBeInvited) {
     res.status(400).send("No User To Be Invited");
   }
 
-  const space = await prisma.space.findUnique({
-    where: {
-      id: spaceId,
-    },
-  });
+  if (inSpace || invited) {
+    res.status(500).send("User Already In Space");
+  } else {
+    const space = await prisma.space.findUnique({
+      where: {
+        id: spaceId,
+      },
+    });
 
-  await prisma.invitesToSpace.create({
-    data: {
-      createdByUser: userId,
-      spaceName: space?.name!,
-      userInvited: userToBeInvited,
-      spaceId: spaceId,
-    },
-  });
+    await prisma.invitesToSpace.create({
+      data: {
+        createdByUser: userId,
+        spaceName: space?.name!,
+        userInvited: userToBeInvited,
+        spaceId: spaceId,
+      },
+    });
 
-  res.status(201).send("Invite Created");
+    res.status(201).send("Invite Created");
+  }
 }
