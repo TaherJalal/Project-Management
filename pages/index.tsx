@@ -26,6 +26,7 @@ export default function index() {
   const [spaces, setSpaces] = useState([]);
   const [invites, setInvites] = useState([]);
   const [spaceName , setSpaceName] = useState<string>("")
+  const [acceptInvite , setAcceptInvite] = useState<boolean>(false)
 
   const { isLoading, error } = useQuery({
     queryKey: ["landingPageData"],
