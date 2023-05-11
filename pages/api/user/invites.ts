@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../lib/prisma";
 import jwt from "jsonwebtoken";
-import index from "@/pages";
 
 export default async function addSpace(
   req: NextApiRequest,

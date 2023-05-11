@@ -27,6 +27,8 @@ export default function index() {
   const [invites, setInvites] = useState([]);
   const [spaceName , setSpaceName] = useState<string>("")
   const [acceptInvite , setAcceptInvite] = useState<boolean>(false)
+  const [inviteId , setInviteId] = useState<string>("")
+  const [spaceId , setSpaceId] = useState<String>("")
 
   const { isLoading, error } = useQuery({
     queryKey: ["landingPageData"],
@@ -45,6 +47,27 @@ export default function index() {
   const newSpace = () => {
     axios.post("http://localhost:3000/api/space/create", {
       spaceName
+    }, {
+      headers: {Authorization: localStorage.getItem("token")}
+    })
+  }
+
+  const AcceptInvite = (inviteId:string , spaceId:string) => {
+    setAcceptInvite(true)
+    axios.post("http://localhost:3000/api/user/invites", {
+      acceptInvite,
+      inviteId,
+      spaceId
+    }, {
+      headers: {Authorization: localStorage.getItem("token")}
+    })
+  }
+
+  const RejectInvite = (inviteId:string , spaceId:string) => {
+    axios.post("http://localhost:3000/api/user/invites", {
+      acceptInvite,
+      inviteId,
+      spaceId
     }, {
       headers: {Authorization: localStorage.getItem("token")}
     })
@@ -167,8 +190,8 @@ export default function index() {
                             {invite.createdByUser}
                           </p>
                           <div className="flex gap-2">
-                            <BsCheck2 />
-                            <BsXLg />
+                            <BsCheck2 onClick={AcceptInvite(invite.id , invite.spaceId)!}/>
+                            <BsXLg onClick={RejectInvite(invite.id , invite.spaceId)!}/>
                           </div>
                         </div>
                       ))}
