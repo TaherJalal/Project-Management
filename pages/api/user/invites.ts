@@ -16,8 +16,6 @@ export default async function addSpace(
 
   const userId: string = jwt.verify(token, secret) as string;
 
-  // const { accept } = req.body;
-
   if (!userId) {
     res.status(401).send("UnAuthorized");
   }
@@ -45,7 +43,9 @@ export default async function addSpace(
     )
   );
 
-  invites.forEach((x, index) => (x.createdByUser = user[index]?.email!));
+  invites.forEach(
+    (invite, index) => (invite.createdByUser = user[index]?.email!)
+  );
 
   res.json({
     invites,

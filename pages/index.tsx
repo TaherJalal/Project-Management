@@ -25,6 +25,7 @@ export default function index() {
   const [name, setName] = useState<string>("");
   const [spaces, setSpaces] = useState([]);
   const [invites, setInvites] = useState([]);
+  const [spaceName , setSpaceName] = useState<string>("")
 
   const { isLoading, error } = useQuery({
     queryKey: ["landingPageData"],
@@ -39,6 +40,14 @@ export default function index() {
         setInvites(data.data.invites);
     },
   });
+
+  const newSpace = () => {
+    axios.post("http://localhost:3000/api/space/create", {
+      spaceName
+    }, {
+      headers: {Authorization: localStorage.getItem("token")}
+    })
+  }
 
   console.log(data);
 
@@ -121,11 +130,12 @@ export default function index() {
                   >
                     <AiOutlinePlus />
                     {newSpaceState ? (
-                      <form className="text-black">
+                      <form className="text-black" onSubmit={newSpace}>
                         <input
                           type="text"
                           placeholder="Space Name"
                           className="text-sm rounded-sm text-center"
+                          onChange={(e) => setSpaceName(e.target.value)}
                         />
                       </form>
                     ) : (
