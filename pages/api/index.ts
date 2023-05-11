@@ -16,40 +16,48 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     res.status(401).send("UnAuthorized");
   }
 
-  const { firstName, lastName, invitesToSpace, space } =
-    await prisma.user.findUniqueOrThrow({
-      where: {
-        id: userId,
-      },
-      include: {
-        invitesToSpace: true,
-        space: {
-          select: {
-            id: true,
-            createdByUser: true,
-            name: true,
-            task: true,
-          },
-        },
-      },
-    });
-
-  const user = await Promise.all(
-    invitesToSpace.map(
-      async (user) =>
-        await prisma.user.findUnique({
-          where: {
-            id: user.createdByUser,
-          },
-        })
-    )
-  );
-
-  invitesToSpace.forEach((x, index) => (x.createdByUser = user[index]?.email!));
-
-  res.json({
-    name: firstName + " " + lastName,
-    invites: invitesToSpace,
-    spaces: space,
+  const invites = await prisma.invitesToSpace.findMany({
+    where: {
+      userInvited: userId,
+    },
   });
+
+  res.json(invites);
+
+  // const { firstName, lastName, invitesToSpace, space } =
+  //   await prisma.user.findUniqueOrThrow({
+  //     where: {
+  //       id: userId,
+  //     },
+  //     include: {
+  //       invitesToSpace: true,
+  //       space: {
+  //         select: {
+  //           id: true,
+  //           createdByUser: true,
+  //           name: true,
+  //           task: true,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  // const user = await Promise.all(
+  //   invitesToSpace.map(
+  //     async (user) =>
+  //       await prisma.user.findUnique({
+  //         where: {
+  //           id: user.createdByUser,
+  //         },
+  //       })
+  //   )
+  // );
+
+  // invitesToSpace.forEach((x, index) => (x.createdByUser = user[index]?.email!));
+
+  // res.json({
+  //   name: firstName + " " + lastName,
+  //   invites: invitesToSpace,
+  //   spaces: space,
+  // });
 }
