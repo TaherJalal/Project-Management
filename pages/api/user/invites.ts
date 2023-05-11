@@ -20,12 +20,6 @@ export default async function addSpace(
     res.status(401).send("UnAuthorized");
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
   const { inviteId, acceptInvite, spaceId } = req.body;
 
   if (!acceptInvite) {
