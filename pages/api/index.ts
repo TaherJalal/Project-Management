@@ -22,25 +22,23 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     },
   });
 
-  const { firstName, lastName, space } = await prisma.user.findUniqueOrThrow({
+  const { firstName, lastName } = await prisma.user.findUniqueOrThrow({
     where: {
       id: userId,
     },
-    include: {
-      space: {
-        select: {
-          id: true,
-          createdByUser: true,
-          name: true,
-          task: true,
-        },
+  });
+
+  const space = await prisma.space.findMany({
+    where: {
+      users: {
+        has: userId,
       },
     },
   });
 
   const user = await Promise.all(
     invitesToSpace.map(
-      async (user) =>
+      async user =>
         await prisma.user.findUnique({
           where: {
             id: user.createdByUser,
