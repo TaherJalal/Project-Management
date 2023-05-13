@@ -190,8 +190,8 @@ export default function index() {
                             {invite.createdByUser}
                           </p>
                           <div className="flex gap-2">
-                            <BsCheck2 onClick={AcceptInvite(invite.id , invite.spaceId)!}/>
-                            <BsXLg onClick={RejectInvite(invite.id , invite.spaceId)!}/>
+                            <BsCheck2 onClick={() => AcceptInvite(invite?.id , invite?.spaceId)!}/>
+                            <BsXLg onClick={() => RejectInvite(invite?.id , invite?.spaceId)!}/>
                           </div>
                         </div>
                       ))}

@@ -21,7 +21,7 @@ export default async function addSpace(
 
   const { inviteId, acceptInvite, spaceId } = req.body;
 
-  if (!acceptInvite) {
+  if (acceptInvite === false) {
     await prisma.invitesToSpace.delete({
       where: {
         id: inviteId,
