@@ -6,8 +6,6 @@ function Navbar() {
     <div className="font-montserrat font-medium text-lg flex justify-between px-5 py-1 dark:bg-zinc-900 dark:text-white text-black bg-emerald-200">
       <div className="flex gap-5 font-montserrat">
         <Link href="/">Home</Link>
-        <Link href="/space">Spaces</Link>
-        <Link href="/">Blah</Link>
       </div>
 
       <div className="flex gap-5 font-montserrat">
