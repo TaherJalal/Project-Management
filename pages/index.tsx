@@ -54,6 +54,7 @@ export default function index() {
         headers: { Authorization: localStorage.getItem("token") },
       }
     );
+    window.location.reload();
   };
 
   const AcceptInvite = (inviteId: string, spaceId: string) => {
@@ -68,6 +69,7 @@ export default function index() {
         headers: { Authorization: localStorage.getItem("token") },
       }
     );
+    window.location.reload();
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
@@ -83,6 +85,7 @@ export default function index() {
           headers: { Authorization: localStorage.getItem("token") },
         }
       );
+    window.location.reload();
   };
 
   console.log(data);
