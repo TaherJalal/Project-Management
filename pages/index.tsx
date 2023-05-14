@@ -87,17 +87,18 @@ export default function index() {
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
-    axios.post(
-      "http://localhost:3000/api/user/invites",
-      {
-        acceptInvite: false,
-        inviteId,
-        spaceId,
-      },
-      {
-        headers: { Authorization: localStorage.getItem("token") },
-      }
-    );
+    console.log(acceptInvite),
+      axios.post(
+        "http://localhost:3000/api/user/invites",
+        {
+          acceptInvite,
+          inviteId,
+          spaceId,
+        },
+        {
+          headers: { Authorization: localStorage.getItem("token") },
+        }
+      );
     window.location.reload();
   };
 
