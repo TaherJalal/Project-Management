@@ -14,6 +14,7 @@ import { BsCheck2, BsXLg } from "react-icons/bs";
 import { FcInvite } from "react-icons/fc";
 import { useQuery } from "@tanstack/react-query";
 import { RxCardStackMinus } from "react-icons/rx";
+import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 
 export default function index() {
@@ -100,6 +101,11 @@ export default function index() {
     window.location.reload();
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   if (isLoading)
     return (
       <div className="dark:bg-zinc-950 dark:text-white bg-white text-black h-screen">
@@ -119,7 +125,7 @@ export default function index() {
       <div className="bg-indigo-200 flex overflow-hidden">
         {!showSideBar ? (
           <div
-            className="w-10 h-screen flex justify-center py-3 bg-rose-300"
+            className="w-10 h-screen flex justify-center py-3 bg-rose-300 cursor-pointer"
             onClick={() => setShowSideBar(true)}
           >
             <div className="flex justify-end">
@@ -140,12 +146,12 @@ export default function index() {
                 <h2 className="">Hi, {name} !</h2>
               </div>
 
-              <div className="flex gap-2 justify-center items-center">
+              <div className="flex gap-2 justify-center items-center cursor-auto">
                 <Link href="/">Home</Link>
                 <AiOutlineHome />
               </div>
 
-              <div className="flex flex-col gap-2 justify-center items-center">
+              <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
                 <div
                   className="flex gap-2 justify-center items-center"
                   onClick={state ? () => setState(false) : () => setState(true)}
@@ -167,7 +173,7 @@ export default function index() {
                   <></>
                 )}
                 <div
-                  className="flex gap-2 justify-center items-center"
+                  className="flex gap-2 justify-center items-center cursor-pointer"
                   onClick={
                     newSpaceState
                       ? () => setNewSpaceState(false)
@@ -190,7 +196,7 @@ export default function index() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 justify-center items-center">
+              <div className="flex flex-col gap-2 justify-center items-center cursor-pointer">
                 <div
                   className="flex gap-2 justify-center items-center"
                   onClick={
@@ -227,6 +233,13 @@ export default function index() {
                 ) : (
                   <></>
                 )}
+              </div>
+              <div
+                className="flex gap-3 justify-center items-center cursor-pointer"
+                onClick={logout}
+              >
+                Logout
+                <BiLogOut />
               </div>
             </div>
           </div>
