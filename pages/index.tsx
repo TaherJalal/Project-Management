@@ -26,7 +26,6 @@ export default function index() {
   const [spaces, setSpaces] = useState([]);
   const [invites, setInvites] = useState([]);
   const [spaceName, setSpaceName] = useState<string>("");
-  const [acceptInvite, setAcceptInvite] = useState<boolean>(false);
   const [inviteId, setInviteId] = useState<string>("");
   const [spaceId, setSpaceId] = useState<String>("");
 
@@ -73,7 +72,6 @@ export default function index() {
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
-    console.log(acceptInvite),
       axios.post(
         "http://localhost:3000/api/user/invites",
         {
