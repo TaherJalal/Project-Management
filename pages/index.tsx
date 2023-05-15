@@ -87,11 +87,10 @@ export default function index() {
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
-    console.log(acceptInvite),
       axios.post(
         "http://localhost:3000/api/user/invites",
         {
-          acceptInvite,
+          acceptInvite: false,
           inviteId,
           spaceId,
         },
