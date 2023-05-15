@@ -29,6 +29,7 @@ export default function space() {
   const [invites, setInvites] = useState([]);
   const [spaceName, setSpaceName] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  // const [task , setTask] = useState([])
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -268,9 +269,25 @@ export default function space() {
           </div>
 
           <div className="flex flex-wrap gap-10 pt-3 pl-3 justify-center items-center">
-            <div className="w-60 h-72 bg-purple-400"></div>
+            {
+              taskData?.data.task.map((task:any) => (
 
-            <div className="w-60 h-72 bg-purple-400"></div>
+            <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40">
+              <form>
+               <p className="hidden">{task.id}</p> 
+               <p>Title : {task.title}</p>
+               <p>Created: {task.createdAt}</p>
+
+                <p>{task.description}</p>
+
+               <p>Priority : {task.priority}</p>
+                <p>Status : {task.status}</p>
+              </form>
+            </div>
+
+              ))
+            }
+
 
             <AiOutlinePlus size={40} />
           </div>
