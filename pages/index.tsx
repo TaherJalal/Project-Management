@@ -106,6 +106,10 @@ export default function index() {
     window.location.reload();
   };
 
+  const goToSpace = (id:string) => {
+    window.location.href = `http://localhost:3000/space/${id}`
+  }
+
   if (isLoading)
     return (
       <div className="dark:bg-zinc-950 dark:text-white bg-white text-black h-screen">
@@ -163,7 +167,7 @@ export default function index() {
                 {state ? (
                   <div>
                     {spaces.map((space) => (
-                      <div className="text-xs flex" key={space.id}>
+                      <div className="text-xs flex" key={space.id} onClick={ () => goToSpace(space.id)}>
                         <p className="hidden">{space.id}</p>
                         <p>{space.name}</p>
                       </div>

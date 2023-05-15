@@ -123,6 +123,10 @@ export default function space() {
     window.location.reload();
   };
 
+  const goToSpace = (id:string) => {
+    window.location.href = `http://localhost:3000/space/${id}`
+  }
+
   if (indexLoading)
     return (
       <div className="dark:bg-zinc-950 dark:text-white bg-white text-black h-screen">
@@ -180,7 +184,7 @@ export default function space() {
                 {state ? (
                   <div>
                     {spaces.map((space) => (
-                      <div className="text-xs flex" key={space.id}>
+                      <div className="text-xs flex" key={space.id} onClick={() => goToSpace(space.id)}>
                         <p className="hidden">{space.id}</p>
                         <p>{space.name}</p>
                       </div>
@@ -282,7 +286,7 @@ export default function space() {
                 <p>{task.description}</p>
 
                <p>Priority : {task.priority}</p>
-                <p>Status : {task.status}</p>
+               <p>Status : {task.status}</p>
               </form>
             </div>
 
