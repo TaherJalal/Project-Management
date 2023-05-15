@@ -17,6 +17,7 @@ import { RxCardStackMinus } from "react-icons/rx";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Moment from "react-moment";
 
 export default function space() {
   const [state, setState] = useState<boolean>(false);
@@ -276,7 +277,7 @@ export default function space() {
               <form>
                <p className="hidden">{task.id}</p> 
                <p>Title : {task.title}</p>
-               <p>Created: {task.createdAt}</p>
+               <Moment format="LL">{task.createdAt}</Moment>
 
                 <p>{task.description}</p>
 
