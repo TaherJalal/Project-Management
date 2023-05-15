@@ -13,8 +13,9 @@ import { HiOutlineArrowLeft } from "react-icons/hi";
 import { BsCheck2, BsXLg } from "react-icons/bs";
 import { FcInvite } from "react-icons/fc";
 import { useQuery } from "@tanstack/react-query";
-import { RxCardStackMinus } from "react-icons/rx";
+import { RxCardStackMinus, RxUpdate } from "react-icons/rx";
 import { BiLogOut } from "react-icons/bi";
+import {RiDeleteBin6Line} from 'react-icons/ri'
 import axios from "axios";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
@@ -277,7 +278,7 @@ export default function space() {
             {
               taskData?.data.task.map((task:any) => (
 
-            <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40">
+            <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40 flex flex-col justify-center items-center">
               <form>
                <p className="hidden">{task.id}</p> 
                <p>Title : {task.title}</p>
@@ -287,6 +288,10 @@ export default function space() {
 
                <p>Priority : {task.priority}</p>
                <p>Status : {task.status}</p>
+               <div className="flex gap-4">
+                <RiDeleteBin6Line />
+                <RxUpdate />
+               </div>
               </form>
             </div>
 
