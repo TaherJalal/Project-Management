@@ -53,5 +53,8 @@ export default async function index(req: NextApiRequest, res: NextApiResponse) {
     name: firstName + " " + lastName,
     invites: invitesToSpace,
     spaces: space,
+    totalSpaces: space.length,
+    totalInvites: invitesToSpace.length,
+    day: new Date(),
   });
 }
