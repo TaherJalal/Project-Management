@@ -250,19 +250,7 @@ export default function index() {
         )}
 
         <div className="flex flex-col gap-4 h-screen p-3">
-          <div className="flex gap-4 justify-first text-2xl relative left-full">
-            <p>search</p>
-            <p>sort</p>
-            <p>filters</p>
-          </div>
-
-          <div className="flex flex-wrap gap-10 pt-3 pl-3 justify-center items-center">
-            <div className="w-60 h-72 bg-purple-400"></div>
-
-            <div className="w-60 h-72 bg-purple-400"></div>
-
-            <AiOutlinePlus size={40} />
-          </div>
+         
         </div>
       </div>
     </>
