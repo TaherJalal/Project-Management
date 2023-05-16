@@ -57,8 +57,6 @@ export default function index() {
     },
   });
 
-  console.log(data)
-
   if (!token) {
     return (
       <div>
@@ -261,7 +259,7 @@ export default function index() {
 
         <div className="flex flex-col gap-4 h-screen w-screen">
 
-        <div className="flex gap-4 justify-between relative h-screen w-screen p-3">
+        <div className="flex justify-between relative p-2">
          <h1 className="text-4xl">Hi {name}</h1>
          <Moment className="capitalize text-3xl" format="ll">{day}</Moment>
         </div>
