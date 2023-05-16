@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RxCardStackMinus } from "react-icons/rx";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
+import Moment from "react-moment";
 
 export default function index() {
   const [state, setState] = useState<boolean>(false);
@@ -28,6 +29,10 @@ export default function index() {
   const [invites, setInvites] = useState([]);
   const [spaceName, setSpaceName] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [day, setDay] = useState<string>("");
+  const [inviteN ,setInviteN] = useState<string>("")
+  const [spaceN ,setSpaceN] = useState<string>("")
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -45,9 +50,14 @@ export default function index() {
       setData(data.data),
         setName(data.data.name),
         setSpaces(data.data.spaces),
-        setInvites(data.data.invites);
+        setInvites(data.data.invites),
+        setInviteN(data.data.totalInvites),
+        setSpaceN(data.data.totalSapces),
+        setDay(data.data.day)
     },
   });
+
+  console.log(data)
 
   if (!token) {
     return (
@@ -126,10 +136,10 @@ export default function index() {
 
   return (
     <>
-      <div className="bg-indigo-200 flex overflow-hidden">
+      <div className="bg-indigo-200 flex overflow-hidden font-montserrat">
         {!showSideBar ? (
           <div
-            className="w-10 h-screen flex justify-center py-3 bg-rose-300 cursor-pointer"
+            className="w-10 h-screen flex justify-center py-3 bg-rose-300 cursor-pointer font-montserrat"
             onClick={() => setShowSideBar(true)}
           >
             <div className="flex justify-end">
@@ -249,7 +259,12 @@ export default function index() {
           </div>
         )}
 
-        <div className="flex flex-col gap-4 h-screen p-3">
+        <div className="flex flex-col gap-4 h-screen w-screen">
+
+        <div className="flex gap-4 justify-between relative h-screen w-screen p-3">
+         <h1 className="text-4xl">Hi {name}</h1>
+         <Moment className="capitalize text-3xl" format="ll">{day}</Moment>
+        </div>
          
         </div>
       </div>
