@@ -282,7 +282,7 @@ export default function space() {
 
           <div className="flex flex-wrap gap-10 pt-3 pl-3 justify-center items-center">
             {taskData?.data.task.map((task: any) => (
-              <div className="w-60 h-72 bg-purple-400 text-xs rounded bg-opacity-40 flex flex-col justify-center items-center">
+              <div className="w-48 h-60 bg-purple-400 text-xs rounded bg-opacity-40 flex flex-col justify-center items-center">
                 <form>
                   <p className="hidden">{task.id}</p>
                   <p>Title : {task.title}</p>
