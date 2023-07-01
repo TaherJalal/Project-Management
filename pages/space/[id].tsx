@@ -149,7 +149,7 @@ export default function space() {
       <div className="dark:bg-zinc-600 dark:text-white bg-white text-black flex overflow-hidden font-ibm">
         {!showSideBar ? (
           <div
-            className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm cursor-pointer"
+            className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm"
             onClick={() => setShowSideBar(true)}
           >
             <div className="flex justify-end">
@@ -157,8 +157,8 @@ export default function space() {
             </div>
           </div>
         ) : (
-          <div className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm">
-            <div className="p-2 flex flex-col gap-4 text-lg font-semibold">
+          <div className="h-screen w-auto dark:bg-zinc-700 flex flex-col font-ibm">
+            <div className="p-2 flex flex-col gap-4 text-md font-semibold">
               <div className="flex justify-end">
                 <HiOutlineArrowLeft
                   size={20}
@@ -167,7 +167,7 @@ export default function space() {
               </div>
 
               <div className="flex gap-2 justify-center items-center">
-                <h2 className="">Hi, {name} !</h2>
+                <h2 className="">Hi, {name}</h2>
               </div>
 
               <div className="flex gap-2 justify-center items-center cursor-auto">
@@ -282,7 +282,7 @@ export default function space() {
 
           <div className="flex flex-wrap gap-10 pt-3 pl-3 justify-center items-center">
             {taskData?.data.task.map((task: any) => (
-              <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40 flex flex-col justify-center items-center">
+              <div className="w-60 h-72 bg-purple-400 text-xs rounded bg-opacity-40 flex flex-col justify-center items-center">
                 <form>
                   <p className="hidden">{task.id}</p>
                   <p>Title : {task.title}</p>
