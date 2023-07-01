@@ -10,9 +10,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
-    fontFamily:{
-      'montserrat': ["Montserrat" , 'sans-serif']
-    }
+    fontFamily: {
+      montserrat: ["Montserrat", "sans-serif"],
+      ibm: ["IBM Plex Mono", "monospace"],
+    },
   },
   plugins: [],
-}
+};

@@ -30,9 +30,8 @@ export default function index() {
   const [spaceName, setSpaceName] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [day, setDay] = useState<string>("");
-  const [inviteN ,setInviteN] = useState<string>("")
-  const [spaceN ,setSpaceN] = useState<string>("")
-
+  const [inviteN, setInviteN] = useState<string>("");
+  const [spaceN, setSpaceN] = useState<string>("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -53,7 +52,7 @@ export default function index() {
         setInvites(data.data.invites),
         setInviteN(data.data.totalInvites),
         setSpaceN(data.data.totalSapces),
-        setDay(data.data.day)
+        setDay(data.data.day);
     },
   });
 
@@ -95,17 +94,17 @@ export default function index() {
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
-      axios.post(
-        "http://localhost:3000/api/user/invites",
-        {
-          acceptInvite: false,
-          inviteId,
-          spaceId,
-        },
-        {
-          headers: { Authorization: localStorage.getItem("token") },
-        }
-      );
+    axios.post(
+      "http://localhost:3000/api/user/invites",
+      {
+        acceptInvite: false,
+        inviteId,
+        spaceId,
+      },
+      {
+        headers: { Authorization: localStorage.getItem("token") },
+      }
+    );
     window.location.reload();
   };
 
@@ -114,9 +113,9 @@ export default function index() {
     window.location.reload();
   };
 
-  const goToSpace = (id:string) => {
-    window.location.href = `http://localhost:3000/space/${id}`
-  }
+  const goToSpace = (id: string) => {
+    window.location.href = `http://localhost:3000/space/${id}`;
+  };
 
   if (isLoading)
     return (
@@ -134,10 +133,10 @@ export default function index() {
 
   return (
     <>
-      <div className="bg-indigo-200 flex overflow-hidden font-montserrat">
+      <div className="dark:bg-zinc-600 dark:text-white bg-white text-black flex overflow-hidden font-ibm">
         {!showSideBar ? (
           <div
-            className="w-10 h-screen flex justify-center py-3 bg-rose-300 cursor-pointer font-montserrat"
+            className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm"
             onClick={() => setShowSideBar(true)}
           >
             <div className="flex justify-end">
@@ -145,8 +144,8 @@ export default function index() {
             </div>
           </div>
         ) : (
-          <div className="h-screen w-auto bg-rose-300 flex flex-col font-montserrat">
-            <div className="p-2 flex flex-col gap-4 text-lg font-semibold">
+          <div className="h-screen w-auto dark:bg-zinc-700 flex flex-col font-ibm">
+            <div className="p-2 flex flex-col gap-4 text-md font-semibold">
               <div className="flex justify-end">
                 <HiOutlineArrowLeft
                   size={20}
@@ -155,7 +154,7 @@ export default function index() {
               </div>
 
               <div className="flex gap-2 justify-center items-center">
-                <h2 className="">Hi, {name} !</h2>
+                <h2 className="">Hi, {name}</h2>
               </div>
 
               <div className="flex gap-2 justify-center items-center cursor-auto">
@@ -175,7 +174,11 @@ export default function index() {
                 {state ? (
                   <div>
                     {spaces.map((space) => (
-                      <div className="text-xs flex" key={space.id} onClick={ () => goToSpace(space.id)}>
+                      <div
+                        className="text-xs flex"
+                        key={space.id}
+                        onClick={() => goToSpace(space.id)}
+                      >
                         <p className="hidden">{space.id}</p>
                         <p>{space.name}</p>
                       </div>
@@ -258,12 +261,12 @@ export default function index() {
         )}
 
         <div className="flex flex-col gap-4 h-screen w-screen">
-
-        <div className="flex justify-between relative p-2">
-         <h1 className="text-4xl">Hi {name}</h1>
-         <Moment className="capitalize text-3xl" format="ll">{day}</Moment>
-        </div>
-         
+          <div className="flex justify-between relative p-2">
+            <h1 className="text-xl font-medium">Hi {name}</h1>
+            <Moment className="capitalize text-xl font-medium" format="ll">
+              {day}
+            </Moment>
+          </div>
         </div>
       </div>
     </>
