@@ -15,7 +15,7 @@ import { FcInvite } from "react-icons/fc";
 import { useQuery } from "@tanstack/react-query";
 import { RxCardStackMinus, RxUpdate } from "react-icons/rx";
 import { BiLogOut } from "react-icons/bi";
-import {RiDeleteBin6Line} from 'react-icons/ri'
+import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
@@ -39,7 +39,7 @@ export default function space() {
     }
   }, []);
 
-  const { isLoading: indexLoading , error: indexError } = useQuery({
+  const { isLoading: indexLoading, error: indexError } = useQuery({
     queryKey: ["landingPageData"],
     queryFn: async () =>
       await axios.get("http://localhost:3000/api/", {
@@ -53,19 +53,21 @@ export default function space() {
     },
   });
 
-  
+  const router = useRouter();
 
-  const router = useRouter()
+  const { id } = router.query;
 
-  const {id} = router.query
-
-  const {error: taskError , isLoading:taskLoading , data: taskData} = useQuery(["spaceData", id], () => {
+  const {
+    error: taskError,
+    isLoading: taskLoading,
+    data: taskData,
+  } = useQuery(["spaceData", id], () => {
     return axios.get(`http://localhost:3000/api/space/${id}`, {
-      headers: { authorization: localStorage.getItem("token") }
-    })
-  })
+      headers: { authorization: localStorage.getItem("token") },
+    });
+  });
 
-  console.log(taskData)
+  console.log(taskData);
 
   if (!token) {
     return (
@@ -105,17 +107,17 @@ export default function space() {
   };
 
   const RejectInvite = (inviteId: string, spaceId: string) => {
-      axios.post(
-        "http://localhost:3000/api/user/invites",
-        {
-          acceptInvite: false,
-          inviteId,
-          spaceId,
-        },
-        {
-          headers: { Authorization: localStorage.getItem("token") },
-        }
-      );
+    axios.post(
+      "http://localhost:3000/api/user/invites",
+      {
+        acceptInvite: false,
+        inviteId,
+        spaceId,
+      },
+      {
+        headers: { Authorization: localStorage.getItem("token") },
+      }
+    );
     window.location.reload();
   };
 
@@ -124,9 +126,9 @@ export default function space() {
     window.location.reload();
   };
 
-  const goToSpace = (id:string) => {
-    window.location.href = `http://localhost:3000/space/${id}`
-  }
+  const goToSpace = (id: string) => {
+    window.location.href = `http://localhost:3000/space/${id}`;
+  };
 
   if (indexLoading)
     return (
@@ -144,10 +146,10 @@ export default function space() {
 
   return (
     <>
-      <div className="bg-indigo-200 flex overflow-hidden">
+      <div className="dark:bg-zinc-600 dark:text-white bg-white text-black flex overflow-hidden font-ibm">
         {!showSideBar ? (
           <div
-            className="w-10 h-screen flex justify-center py-3 bg-rose-300 cursor-pointer"
+            className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm cursor-pointer"
             onClick={() => setShowSideBar(true)}
           >
             <div className="flex justify-end">
@@ -155,7 +157,7 @@ export default function space() {
             </div>
           </div>
         ) : (
-          <div className="h-screen w-auto bg-rose-300 flex flex-col font-montserrat">
+          <div className="w-10 h-screen flex justify-center py-3 dark:bg-zinc-700 cursor-pointer font-ibm">
             <div className="p-2 flex flex-col gap-4 text-lg font-semibold">
               <div className="flex justify-end">
                 <HiOutlineArrowLeft
@@ -185,7 +187,11 @@ export default function space() {
                 {state ? (
                   <div>
                     {spaces.map((space) => (
-                      <div className="text-xs flex" key={space.id} onClick={() => goToSpace(space.id)}>
+                      <div
+                        className="text-xs flex"
+                        key={space.id}
+                        onClick={() => goToSpace(space.id)}
+                      >
                         <p className="hidden">{space.id}</p>
                         <p>{space.name}</p>
                       </div>
@@ -275,29 +281,24 @@ export default function space() {
           </div>
 
           <div className="flex flex-wrap gap-10 pt-3 pl-3 justify-center items-center">
-            {
-              taskData?.data.task.map((task:any) => (
+            {taskData?.data.task.map((task: any) => (
+              <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40 flex flex-col justify-center items-center">
+                <form>
+                  <p className="hidden">{task.id}</p>
+                  <p>Title : {task.title}</p>
+                  <Moment format="LL">{task.createdAt}</Moment>
 
-            <div className="w-60 h-72 bg-purple-400 text-xs rounded-sm bg-opacity-40 flex flex-col justify-center items-center">
-              <form>
-               <p className="hidden">{task.id}</p> 
-               <p>Title : {task.title}</p>
-               <Moment format="LL">{task.createdAt}</Moment>
+                  <p>{task.description}</p>
 
-                <p>{task.description}</p>
-
-               <p>Priority : {task.priority}</p>
-               <p>Status : {task.status}</p>
-               <div className="flex gap-4">
-                <RiDeleteBin6Line />
-                <RxUpdate />
-               </div>
-              </form>
-            </div>
-
-              ))
-            }
-
+                  <p>Priority : {task.priority}</p>
+                  <p>Status : {task.status}</p>
+                  <div className="flex gap-4">
+                    <RiDeleteBin6Line />
+                    <RxUpdate />
+                  </div>
+                </form>
+              </div>
+            ))}
 
             <AiOutlinePlus size={40} />
           </div>
